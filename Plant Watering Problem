@@ -1,0 +1,25 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int minDaysToWaterPlants(vector<int>& plants, int capacity) {
+    int steps = 0, currentCapacity = capacity;
+    for (int i = 0; i < plants.size(); i++) {
+        if (plants[i] <= currentCapacity) {
+            currentCapacity -= plants[i];
+            steps++;
+        } else {
+            steps += (2 * i); 
+            currentCapacity = capacity - plants[i];
+            steps++;
+        }
+    }
+    return steps;
+}
+
+int main() {
+    vector<int> plants = {2, 4, 5, 1, 2};
+    int capacity = 6;
+    cout << minDaysToWaterPlants(plants, capacity) << endl;
+    return 0;
+}
