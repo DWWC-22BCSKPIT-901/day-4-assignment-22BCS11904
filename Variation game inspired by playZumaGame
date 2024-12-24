@@ -1,0 +1,38 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void removeConsecutive(vector<char>& board) {
+    bool removed = true;
+    while (removed) {
+        removed = false;
+        for (size_t i = 0; i < board.size(); ) {
+            size_t j = i;
+            while (j < board.size() && board[j] == board[i]) j++;
+            if (j - i >= 3) {
+                board.erase(board.begin() + i, board.begin() + j);
+                removed = true;
+            } else {
+                i = j;
+            }
+        }
+    }
+}
+
+void playZumaGame(vector<char>& board, const vector<pair<int, char>>& moves) {
+    for (auto& move : moves) {
+        int position = move.first;
+        char color = move.second;
+        board.insert(board.begin() + position, color);
+        removeConsecutive(board);
+    }
+    for (char c : board) cout << c;
+    cout << endl;
+}
+
+int main() {
+    vector<char> board = {'R', 'G', 'B', 'B', 'B', 'G', 'R'};
+    vector<pair<int, char>> moves = {{3, 'B'}, {2, 'R'}, {5, 'G'}};
+    playZumaGame(board, moves);
+    return 0;
+}
